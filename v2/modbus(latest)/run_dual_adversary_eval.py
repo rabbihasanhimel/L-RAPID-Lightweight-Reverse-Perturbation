@@ -9,8 +9,35 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
 
+import os
+
 # ── Configuration ─────────────────────────────────────────────────────────────
-INPUT_FILE = 'Train_Test_IoT_Modbus.csv'
+def resolve_input_path(filename):
+    candidates = [
+        filename,
+        os.path.join("data", "raw", filename),
+        os.path.join("..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), "..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), filename),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return os.path.abspath(c)
+    return filename
+
+def resolve_output_path(filename, subfolder="data/results"):
+    candidates = [
+        os.path.join(os.path.dirname(__file__), "..", subfolder),
+        subfolder,
+        os.path.join("..", subfolder),
+        "."
+    ]
+    for c in candidates:
+        if os.path.isdir(c):
+            return os.path.abspath(os.path.join(c, filename))
+    return filename
+
+INPUT_FILE = resolve_input_path('Train_Test_IoT_Modbus.csv')
 FC_COLS    = [
     'FC1_Read_Input_Register',
     'FC2_Read_Discrete_Value',
@@ -193,7 +220,8 @@ table_data = [
 ]
 
 df_table = pd.DataFrame(table_data)
-df_table.to_csv('dual_adversary_summary.csv', index=False)
+out_csv = resolve_output_path('dual_adversary_summary.csv', 'data/results')
+df_table.to_csv(out_csv, index=False)
 
 # Save JSON results
 all_results = {
@@ -201,7 +229,8 @@ all_results = {
     'xor_rdp': eval_xor16,
     'gaussian_agp': eval_gauss
 }
-with open('dual_adversary_results.json', 'w') as f:
+out_json = resolve_output_path('dual_adversary_results.json', 'data/results')
+with open(out_json, 'w') as f:
     json.dump(all_results, f, indent=2)
 
 # ── 4. Generate Confusion Matrix Multi-Panel Figure ────────────────────────────
@@ -230,8 +259,9 @@ axes[2].set_xlabel('Predicted Label', fontweight='bold')
 plt.suptitle('Confusion Matrix Triad: Evaluating RDP Privacy & Reversibility Across Industrial Lifecycle',
              fontsize=13, fontweight='bold', y=1.03)
 plt.tight_layout()
-plt.savefig('confusion_matrices_triad.png', dpi=300, bbox_inches='tight')
-print("Figure saved to confusion_matrices_triad.png")
+fig_path = resolve_output_path('confusion_matrices_triad.png', 'figures')
+plt.savefig(fig_path, dpi=300, bbox_inches='tight')
+print(f"Figure saved to {fig_path}")
 
 print("\n" + "=" * 80)
 print("DUAL-ADVERSARY EVALUATION SUMMARY TABLE:")

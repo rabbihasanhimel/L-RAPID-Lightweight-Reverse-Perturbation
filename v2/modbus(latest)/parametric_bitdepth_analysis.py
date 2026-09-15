@@ -6,8 +6,35 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
+import os
+
 # ── Configuration ─────────────────────────────────────────────────────────────
-INPUT_FILE = 'Train_Test_IoT_Modbus.csv'
+def resolve_input_path(filename):
+    candidates = [
+        filename,
+        os.path.join("data", "raw", filename),
+        os.path.join("..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), "..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), filename),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return os.path.abspath(c)
+    return filename
+
+def resolve_output_path(filename, subfolder="data/results"):
+    candidates = [
+        os.path.join(os.path.dirname(__file__), "..", subfolder),
+        subfolder,
+        os.path.join("..", subfolder),
+        "."
+    ]
+    for c in candidates:
+        if os.path.isdir(c):
+            return os.path.abspath(os.path.join(c, filename))
+    return filename
+
+INPUT_FILE = resolve_input_path('Train_Test_IoT_Modbus.csv')
 FC_COLS    = [
     'FC1_Read_Input_Register',
     'FC2_Read_Discrete_Value',
@@ -100,8 +127,9 @@ for k in K_VALUES:
     print(f"  K={k:2d} ({mask:016b}b) -> Attacker Acc: {att_acc:6.2f}% | Transfer Acc: {transfer_acc:6.2f}% | Reversibility: {exact_match_pct:.1f}% ({elapsed:.1f}s)")
 
 df_k = pd.DataFrame(results)
-df_k.to_csv('parametric_k_results.csv', index=False)
-print("\nResults saved to parametric_k_results.csv")
+out_csv = resolve_output_path('parametric_k_results.csv', 'data/results')
+df_k.to_csv(out_csv, index=False)
+print(f"\nResults saved to {out_csv}")
 
 # ── [3/3] Publication-Quality Figure Generation ───────────────────────────────
 print("\n[3/3] Generating publication-quality trade-off plot...")
@@ -165,7 +193,7 @@ ax1.grid(True, linestyle='--', alpha=0.5)
 ax1.legend(loc='center right', frameon=True, facecolor='white', framealpha=0.95, fontsize=10)
 
 plt.tight_layout()
-plot_filename = 'tradeoff_k_vs_accuracy.png'
+plot_filename = resolve_output_path('tradeoff_k_vs_accuracy.png', 'figures')
 plt.savefig(plot_filename, dpi=300)
 print(f"Plot successfully saved to {plot_filename}")
 

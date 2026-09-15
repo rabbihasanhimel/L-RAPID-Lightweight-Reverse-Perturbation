@@ -7,7 +7,32 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-INPUT_FILE = 'Train_Test_IoT_Modbus.csv'
+def resolve_input_path(filename):
+    candidates = [
+        filename,
+        os.path.join("data", "raw", filename),
+        os.path.join("..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), "..", "data", "raw", filename),
+        os.path.join(os.path.dirname(__file__), filename),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return os.path.abspath(c)
+    return filename
+
+def resolve_output_path(filename, subfolder="data/results"):
+    candidates = [
+        os.path.join(os.path.dirname(__file__), "..", subfolder),
+        subfolder,
+        os.path.join("..", subfolder),
+        "."
+    ]
+    for c in candidates:
+        if os.path.isdir(c):
+            return os.path.abspath(os.path.join(c, filename))
+    return filename
+
+INPUT_FILE = resolve_input_path('Train_Test_IoT_Modbus.csv')
 FC_COLS = [
     'FC1_Read_Input_Register',
     'FC2_Read_Discrete_Value',
@@ -344,9 +369,10 @@ for row in summary_rows:
         pkt_latencies.get(row['Method'], 0), 4)
 
 df_results = pd.DataFrame(summary_rows)
-df_results.to_csv('benchmark_results.csv', index=False)
+out_path = resolve_output_path('benchmark_results.csv', 'data/results')
+df_results.to_csv(out_path, index=False)
 print("\n" + "=" * 80)
-print("BENCHMARK SUMMARY (Saved to benchmark_results.csv):")
+print(f"BENCHMARK SUMMARY (Saved to {out_path}):")
 print("=" * 80)
 print(df_results[['Method', 'Enc_Time_ms', 'Enc_Latency_us', 'Per_Packet_Latency_us',
       'Throughput_samples_sec', 'Size_Overhead_pct', 'Exact_Match_pct']].to_string(index=False))
