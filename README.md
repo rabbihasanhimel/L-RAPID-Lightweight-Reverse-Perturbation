@@ -1,5 +1,6 @@
-# L-RAPID: Lightweight Reversible Adversarial Perturbation for Industrial Modbus Data
 # L-RAPID: Lightweight Reversible And Privacy-preserving IIoT Data-perturbation system
+### Lightweight Reversible Adversarial Perturbation for Industrial Modbus Data
+
 ## Abstract
 
 Industrial Control Systems (ICS) using legacy protocols like Modbus TCP/IP transmit operational telemetry across networks in cleartext, making them vulnerable to eavesdropping, reconnaissance, and unauthorized machine-learning-driven process inference. Standard cryptographic encryption (such as AES or ChaCha20) introduces processing latency and protocol overhead that violate strict real-time SCADA cycle constraints. Alternatively, Differential Privacy techniques add irreversible numerical noise, degrading downstream analytical accuracy and expanding register payload sizes.
