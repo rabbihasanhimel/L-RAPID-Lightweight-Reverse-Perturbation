@@ -45,4 +45,28 @@ python run_dual_adversary_eval.py
 # 3. Run parametric bit-depth analysis
 python parametric_bitdepth_analysis.py
 
+```
+
+---
+
+## Conference & Citation
+
+Accepted for presentation at the **CyberMACS International Applied Cybersecurity Conference & Summer School (2026)**.
+
+```bibtex
+@inproceedings{balli2026lrapid,
+  author    = {Tu{\u{g}}{\c{c}}e Ball{\i} and Rabbi Hasan Himel and Contributors},
+  title     = {L-RAPID: Lightweight Reversible Adversarial Perturbation for Industrial Modbus Data},
+  booktitle = {Proceedings of the CyberMACS International Applied Cybersecurity Conference \& Summer School},
+  year      = {2026},
+  publisher = {IEEE / TÜBİTAK BİLGEM},
+  address   = {Istanbul, Turkey}
+}
+```
+
+---
+
+## License
+
+This project is released under the [MIT License](LICENSE).
 
