@@ -46,30 +46,3 @@ python run_dual_adversary_eval.py
 python parametric_bitdepth_analysis.py
 
 
-@inproceedings{balli2026lrapid,
-  author    = {Tu{\u{g}}{\c{c}}e Ball{\i} and Rabbi Hasan Himel and Contributors},
-  title     = {L-RAPID: Lightweight Reversible Adversarial Perturbation for Industrial Modbus Data},
-  booktitle = {Proceedings of the CyberMACS International Applied Cybersecurity Conference \& Summer School},
-  year      = {2026},
-  publisher = {IEEE / TÜBİTAK BİLGEM},
-  address   = {Istanbul, Turkey}
-}
-
-
----
-
-### Commands to Commit and Push
-
-Whenever you want to commit this update to Git:
-
-```powershell
-cd "D:\Study\CyberMACS\Challenge Case iii\v2"
-
-# 1. Stage the updated README
-git add README.md
-
-# 2. Commit the change
-git commit -m "docs: simplify README with clean academic abstract"
-
-# 3. Push to your repository
-git push origin main
