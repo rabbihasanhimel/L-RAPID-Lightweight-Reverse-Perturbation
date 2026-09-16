@@ -48,25 +48,23 @@ python parametric_bitdepth_analysis.py
 ```
 
 ---
+## Citation
 
-## Conference & Citation
+If you find this work useful, please cite:
 
-Accepted for presentation at the **CyberMACS International Applied Cybersecurity Conference & Summer School (2026)**.
+> **L-RAPID: Lightweight Reversible And Privacy-preserving IIoT Data-perturbation system**  
+> Rabbi Hasan Himel, Tayyaba Basri, Hamza Haroon, Aditya Mitra, E. Fatih Yetkin, and Tuğçe Ballı  
+> *CyberMACS Applied Cybersecurity Conference & Summer School (2026)*
 
 ```bibtex
-@inproceedings{balli2026lrapid,
-  author    = {Tu{\u{g}}{\c{c}}e Ball{\i} and Rabbi Hasan Himel and Contributors},
-  title     = {L-RAPID: Lightweight Reversible Adversarial Perturbation for Industrial Modbus Data},
-  booktitle = {Proceedings of the CyberMACS International Applied Cybersecurity Conference \& Summer School},
+@inproceedings{himel2026lrapid,
+  title     = {L-RAPID: Lightweight Reversible And
+               Privacy-preserving IIoT Data-perturbation system},
+  author    = {Himel, Rabbi Hasan and Basri, Tayyaba and
+               Haroon, Hamza and Mitra, Aditya and
+               Yetkin, E. Fatih and Ballı, Tuğçe},
+  booktitle = {CyberMACS Applied Cybersecurity Conference},
   year      = {2026},
   publisher = {IEEE / TÜBİTAK BİLGEM},
   address   = {Istanbul, Turkey}
 }
-```
-
----
-
-## License
-
-This project is released under the [MIT License](LICENSE).
-
